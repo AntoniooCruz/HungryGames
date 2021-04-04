@@ -1,0 +1,26 @@
+fileFormatVersion: 2
+guid: 0c4a759748e78014cb07fa91b514a7a1
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Airbnb Cereal App
+  fontNames:
+  - Airbnb Cereal App
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: e1a90d15d4b25dc479d86771fee349ef, type: 3}
+  - {fileID: 12800000, guid: 32e8eff9110886a4383075f06890d43c, type: 3}
+  - {fileID: 12800000, guid: 70bab7ab4aa5d264b9065643162507c1, type: 3}
+  - {fileID: 12800000, guid: bb20df5d8131e74449b951d1f8cfc448, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

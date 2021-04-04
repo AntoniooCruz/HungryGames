@@ -4,5 +4,17 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Home.unity
+    guid: 0f592a50e2b36064d9105184f3122b14
+  - enabled: 1
+    path: Assets/Scenes/New Plantation.unity
+    guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/Scenes/DNA Modifications.unity
+    guid: 0edf9e1d61dbb8e4eac6bdf4a961b392
+  - enabled: 1
+    path: Assets/Scenes/New Scene.unity
+    guid: 99d49b19ceeec624abed780fdb76f84f
   m_configObjects: {}
