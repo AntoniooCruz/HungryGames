@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/New Scene.unity
     guid: 99d49b19ceeec624abed780fdb76f84f
+  - enabled: 1
+    path: Assets/Scenes/DNA Strand.unity
+    guid: 2255329fb62c77e479b6887fafd99cc0
   m_configObjects: {}

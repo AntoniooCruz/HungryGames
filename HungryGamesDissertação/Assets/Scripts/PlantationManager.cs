@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlantationManager : MonoBehaviour
 {
     public GameObject[] plantationsObjects = new GameObject[3];
     public static List<Plantation> plantations = new List<Plantation>();
+    public Sprite[] BeansProgress = new Sprite[4];
     public Grid grid;
     public int currentPlant = 0;
 
@@ -30,39 +32,58 @@ public class PlantationManager : MonoBehaviour
     {
         yield return new WaitForSeconds(0.1f);
 
-        // Do your code here to assign game objects
-        //GameObject crop = Instantiate(plantationsObjects[0], grid.returnFreePosition() + new Vector3(150, 150), Quaternion.Euler(0, 0, 0));
-        //crop.transform.SetParent(GameObject.FindGameObjectWithTag("Crops").transform, false);
-        //Plantation plantation = new Plantation(Plantation.PlantType.Beans);
-        //crop.GetComponent<Plantation>().setId(0);
-        //plantation.setId(0);
         foreach (var plant in plantations)
         {
             GameObject crop;
             switch (plant.getType())
             {
                 case Plantation.PlantType.Beans:
-                    crop = Instantiate(plantationsObjects[0], grid.returnFreePosition() + new Vector3(150, 150), Quaternion.Euler(0, 0, 0));
+                    crop = Instantiate(plantationsObjects[0], grid.getPosition(plant.getId()) + new Vector3(300, 150), Quaternion.Euler(0, 0, 0));
                     crop.transform.SetParent(GameObject.FindGameObjectWithTag("Crops").transform, false);
-                    crop.GetComponent<Plantation>().setId(plant.getId());
+                    crop.GetComponent<VisualPlantation>().plantation = plantations[plant.getId()];
+                    plantations[plant.getId()].progressBar = crop.transform.GetChild(3).GetComponent<ProgressBar>();
+                    crop.GetComponent<VisualPlantation>().plantation.updateSprite();
                     break;
                 case Plantation.PlantType.Grain:
-                    crop = Instantiate(plantationsObjects[1], grid.returnFreePosition() + new Vector3(150, 150), Quaternion.Euler(0, 0, 0));
+                    crop = Instantiate(plantationsObjects[1], grid.getPosition(plant.getId()) + new Vector3(300, 150), Quaternion.Euler(0, 0, 0));
                     crop.transform.SetParent(GameObject.FindGameObjectWithTag("Crops").transform, false);
-                    crop.GetComponent<Plantation>().setId(plant.getId());
+                    crop.GetComponent<VisualPlantation>().plantation = plantations[plant.getId()];
+                    plantations[plant.getId()].progressBar = crop.transform.GetChild(3).GetComponent<ProgressBar>();
+                    crop.GetComponent<VisualPlantation>().plantation.updateSprite();
                     break;
                 case Plantation.PlantType.Wheat:
-                    crop = Instantiate(plantationsObjects[2], grid.returnFreePosition() + new Vector3(150, 150), Quaternion.Euler(0, 0, 0));
+                    crop = Instantiate(plantationsObjects[2], grid.getPosition(plant.getId()) + new Vector3(300, 150), Quaternion.Euler(0, 0, 0));
                     crop.transform.SetParent(GameObject.FindGameObjectWithTag("Crops").transform, false);
-                    crop.GetComponent<Plantation>().setId(plant.getId());
+                    crop.GetComponent<VisualPlantation>().plantation = plantations[plant.getId()];
+                    plantations[plant.getId()].progressBar = crop.transform.GetChild(3).GetComponent<ProgressBar>();
+                    crop.GetComponent<VisualPlantation>().plantation.updateSprite();
                     break;
                 default:
-                    crop = Instantiate(plantationsObjects[0], grid.returnFreePosition() + new Vector3(150, 150), Quaternion.Euler(0, 0, 0));
+                    crop = Instantiate(plantationsObjects[0], grid.getPosition(plant.getId()) + new Vector3(300, 150), Quaternion.Euler(0, 0, 0));
                     crop.transform.SetParent(GameObject.FindGameObjectWithTag("Crops").transform, false);
-                    crop.GetComponent<Plantation>().setId(plant.getId());
+                    crop.GetComponent<VisualPlantation>().plantation = plantations[plant.getId()];
+                    plantations[plant.getId()].progressBar = crop.transform.GetChild(3).GetComponent<ProgressBar>();
+                    crop.GetComponent<VisualPlantation>().plantation.updateSprite();
                     break;
             }
         }
+
+    }
+
+    public void readyPlantationHarvest(int id)
+    {
+        GameObject crops = GameObject.FindGameObjectWithTag("Crops");
+        crops.transform.GetChild(id).GetChild(4).gameObject.SetActive(true);
+   
+    }
+
+    public void plantationDied(int id)
+    {
+        GameObject crops = GameObject.FindGameObjectWithTag("Crops");
+        crops.transform.GetChild(id).GetChild(4).gameObject.SetActive(false);
+        crops.transform.GetChild(id).GetChild(5).gameObject.SetActive(true);
+        crops.transform.GetChild(id).GetChild(3).transform.GetChild(1).GetComponent<Image>().color = new Color32(255, 16, 16, 255);
+
     }
 
 

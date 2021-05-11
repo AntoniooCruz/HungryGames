@@ -44,6 +44,13 @@ public class Grid
         return new Vector3(0,0);
     }
 
+    public Vector3 getPosition(int id)
+    {
+        int x = id / 2;
+        int y = id % 2;
+        return GetWorldPosition(x, y);
+    }
+
     private Vector3 GetWorldPosition(int x, int y)
     {
         Vector3 vector =  new Vector3(x, y);
