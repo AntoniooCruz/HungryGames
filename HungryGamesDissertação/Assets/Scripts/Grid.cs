@@ -53,9 +53,19 @@ public class Grid
 
     private Vector3 GetWorldPosition(int x, int y)
     {
-        Vector3 vector =  new Vector3(x, y);
-        //vector = Quaternion.Euler(0, 0, 29) * vector;
-        vector = vector * cellSize;
+        Vector3 vector =  new Vector3(-x, -y);
+        if(x == 0)
+        {
+            vector = Quaternion.Euler(0, 25.5f, 64.5f) * vector;
+            vector = vector * cellSize;
+        }
+        if(x == 1)
+        {
+            vector = Quaternion.Euler(0, 0, 29f) * vector;
+            vector = vector * (cellSize - 13);
+        }
+        
+
         return vector;
     }
   

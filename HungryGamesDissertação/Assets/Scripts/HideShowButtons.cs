@@ -7,11 +7,25 @@ public class HideShowButtons : MonoBehaviour
 {
     public Button StatsButton;
     public Button UpgradeButton;
+    public Button SelectButton;
+    private bool alive = true;
 
     public void ToggleButtons()
     {
-        StatsButton.gameObject.SetActive(!StatsButton.IsActive());
-        UpgradeButton.gameObject.SetActive(!UpgradeButton.IsActive());
+        if(alive)
+        {
+            StatsButton.gameObject.SetActive(!StatsButton.IsActive());
+            if(!gameObject.GetComponent<VisualPlantation>().choosePlantation)
+                UpgradeButton.gameObject.SetActive(!UpgradeButton.IsActive());
+            else
+                SelectButton.gameObject.SetActive(!SelectButton.IsActive());
+        }
+        
+    }
+
+    public void KillPlant()
+    {
+        alive = false;
     }
 
 }

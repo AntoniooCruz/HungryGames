@@ -20,4 +20,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/DNA Strand.unity
     guid: 2255329fb62c77e479b6887fafd99cc0
+  - enabled: 1
+    path: Assets/Scenes/GameMenu.unity
+    guid: c5422b7c4b75a494cb9407c533386de5
+  - enabled: 1
+    path: Assets/Scenes/TutorialStart.unity
+    guid: 6d418c7fbb50aab42ac24deff759ff0c
   m_configObjects: {}

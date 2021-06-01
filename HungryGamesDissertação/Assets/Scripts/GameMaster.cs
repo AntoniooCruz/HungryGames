@@ -7,10 +7,13 @@ public class GameMaster : MonoBehaviour
     public static GameMaster GM;
 
     public Sprite[] beansProgress = new Sprite[4];
+    public Sprite[] cornProgress = new Sprite[4];
+    public Sprite[] wheatProgress = new Sprite[4];
     public PlantationManager plantationManager;
     public DisplayResistance displayResistance;
-   
-    public int dnaPoints = 0;
+    public DisplayUpgrades displayUpgrades;
+
+    public int dnaPoints = 1000;
     public int populationPoints = 200;
     public int foodPoints = 200;
     public int deaths = 0;

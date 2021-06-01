@@ -8,6 +8,7 @@ TagManager:
   - Crops
   - ProgressBar
   - Forecast
+  - Upgrades
   layers:
   - Default
   - TransparentFX

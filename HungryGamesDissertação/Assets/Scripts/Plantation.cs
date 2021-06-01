@@ -5,16 +5,17 @@ using UnityEngine.UI;
 
 public class Plantation : MonoBehaviour
 {
-    public enum PlantType { Wheat, Beans, Grain };
+    public enum PlantType { Wheat, Beans, Corn };
     public  Sprite[] plantProgress = new Sprite[4];
     public ProgressBar progressBar;
+    public  List<DnaUpgrade> upgrades = new List<DnaUpgrade>();
     private bool[] enhancements = new bool[4];
     private PlantType type;
-    private int heatResitance = 1;
+    private int heatResistance = 1;
     private int coldResistance = 1;
     private int floodResistance = 1;
     private int pestResistance = 1;
-    private int droughtsResistance = 1;
+    private int droughtResistance = 1;
     private int timeToCollect = 0;
     private int id;
     private bool live = true;
@@ -35,34 +36,91 @@ public class Plantation : MonoBehaviour
         switch (type)
         {
             case PlantType.Beans:
-                heatResitance++;
+                heatResistance++;
                 floodResistance++;
-                droughtsResistance--;
+                droughtResistance--;
                 break;
             case PlantType.Wheat:
                 coldResistance++;
                 pestResistance++;
                 floodResistance--;
                 break;
-            case PlantType.Grain:
+            case PlantType.Corn:
                 break;
         }
     }
 
-    public int getHeatResistance()
+    public Plantation(Plantation plantation)
     {
-        return heatResitance;
+        this.type = plantation.type;
+        int[] resistances = plantation.getResistances();
+        this.coldResistance = resistances[0];
+        this.heatResistance = resistances[1];
+        this.floodResistance = resistances[2];
+        this.pestResistance = resistances[3];
+        this.droughtResistance = resistances[4];
+        this.timeToCollect = 0;
+        this.upgrades = plantation.upgrades;
+
     }
 
+    public int getHeatResistance()
+    {
+        return heatResistance;
+    }
+    public void increaseColdResistance()
+    {
+        coldResistance++;
+    }
+    public void decreaseColdResistance()
+    {
+        coldResistance--;
+    }
     public void increaseHeatResistance()
     {
-        heatResitance++;
+        heatResistance++;
     }
     public void decreaseHeatResistance()
     {
-        heatResitance--;
+        heatResistance--;
+    }
+    public void increaseFloodResistance()
+    {
+        floodResistance++;
+    }
+    public void decreaseFloodResistance()
+    {
+        floodResistance--;
     }
 
+    public void increasePestResistance()
+    {
+        pestResistance++;
+
+    }
+    public void decreasePestResistance()
+    {
+        pestResistance--;
+    }
+
+    public void increaseDroughtResistance()
+    {
+        droughtResistance++;
+    }
+    public void decreaseDroughtResistance()
+    {
+        droughtResistance--;
+    }
+
+    public void addUpgrade(DnaUpgrade upgrade)
+    {
+        upgrades.Add(upgrade);
+    }
+
+    public bool hasUpgrade(DnaUpgrade upgrade)
+    {
+        return upgrades.Contains(upgrade);
+    }
     public PlantType getType()
     {
         return type;
@@ -70,12 +128,12 @@ public class Plantation : MonoBehaviour
 
     public int[] getResistances()
     {
-        int[] resistances = new int[4];
+        int[] resistances = new int[5];
         resistances[0] = coldResistance;
-        resistances[1] = heatResitance;
-        resistances[2] = pestResistance;
-        resistances[3] = droughtsResistance;
-        //resistances[4] = floodResistance;
+        resistances[1] = heatResistance;
+        resistances[2] = floodResistance;
+        resistances[3] = pestResistance;
+        resistances[4] = droughtResistance;
         return resistances;
     }
 
@@ -106,19 +164,19 @@ public class Plantation : MonoBehaviour
         switch (id)
         {
             case 0:
-                heatResitance++;
+                heatResistance++;
                 floodResistance++;
                 break;
             case 1:
                 coldResistance++;
-                if (droughtsResistance > 0) droughtsResistance--;
+                if (droughtResistance > 0) droughtResistance--;
                 break;
             case 2:
                 pestResistance++;
                 coldResistance++;
                 break;
             case 3:
-                heatResitance++;
+                heatResistance++;
                 if (coldResistance > 0) coldResistance--;
                 break;
 
@@ -133,6 +191,7 @@ public class Plantation : MonoBehaviour
     {
         if (live)
         {
+            GameMaster.GM.plantationManager.plantationAlive(id);
             if (timeToCollect < 10)
                 timeToCollect++;
             progressBar.SetProgress(timeToCollect * 10);
@@ -148,32 +207,76 @@ public class Plantation : MonoBehaviour
 
     public void harvestPlantation()
     {
-        timeToCollect = 0;
-        GameMaster.GM.foodPoints += 200;
-        GameMaster.GM.dnaPoints += 500;
-        readyToHarvest = false;
-        progressBar.SetProgress(0);
-        updateSprite();
+        if (live)
+        {
+            timeToCollect = 0;
+            GameMaster.GM.foodPoints += 200;
+            GameMaster.GM.dnaPoints += 500;
+            readyToHarvest = false;
+            progressBar.SetProgress(0);
+            updateSprite();
+        }
     }
 
     public void updateSprite()
     {
         image = GameObject.FindGameObjectWithTag("Crops").transform.GetChild(id).GetComponent<Image>();
+        Sprite[] sprites;
+        switch (type)
+        {
+            case PlantType.Beans:
+                sprites = GameMaster.GM.beansProgress;
+                break;
+            case PlantType.Corn:
+                sprites = GameMaster.GM.cornProgress;
+                break;
+            case PlantType.Wheat:
+                sprites = GameMaster.GM.wheatProgress;
+                break;
+            default:
+                sprites = GameMaster.GM.beansProgress;
+                break;
+        }
+
         if (timeToCollect < 3)
         {
-            image.sprite = GameMaster.GM.beansProgress[0];
+            image.sprite = sprites[0];
         }
         else if (timeToCollect < 6)
         {
-            image.sprite = GameMaster.GM.beansProgress[1];
+            image.sprite = sprites[1];
         }
         else if (timeToCollect <= 9)
         {
-            image.sprite = GameMaster.GM.beansProgress[2];
+            image.sprite = sprites[2];
         }
-        else image.sprite = GameMaster.GM.beansProgress[3];
+        else image.sprite = sprites[3];
 
             progressBar.SetProgress(timeToCollect * 10);
+    }
+
+    public void resetPlantation()
+    {
+        if (live)
+        {
+            timeToCollect = 0;
+            progressBar.SetProgress(0);
+            GameMaster.GM.plantationManager.plantationReset(id);
+            updateSprite();
+        }
+    }
+
+    public void delayPlantation()
+    {
+        if (live)
+        {
+            timeToCollect -= 2;
+            if (timeToCollect < 0)
+                timeToCollect = 0;
+            progressBar.SetProgress(timeToCollect);
+            GameMaster.GM.plantationManager.plantationReset(id);
+            updateSprite();
+        }
     }
 }
 

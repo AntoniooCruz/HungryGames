@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DisplayResistance : MonoBehaviour
 {
-    public int[] resistances = new int[4];
+    public int[] resistances = new int[5];
     // Start is called before the first frame update
     void Start()
     {

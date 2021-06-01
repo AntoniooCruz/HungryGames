@@ -26,11 +26,57 @@ public class LoadScene : MonoBehaviour
       //  Debug.Log(PlantationManager.plantations[0].getEnhancements()[0]);
     }
 
+    public void LoadChoosePlantation(int sceneIndex)
+    {
+        if (GameMaster.GM.dnaPoints >= 1650)
+        {
+            SceneManager.LoadScene(sceneIndex);
+            GameMaster.GM.plantationManager.choosingPlantation = true;
+            GameMaster.GM.plantationManager.instantiatePlantations();
+        }
+
+    }
+
     public void LoadDnaEnhancer(int sceneIndex)
     {
         SceneManager.LoadScene(sceneIndex);
         Plantation plant = gameObject.GetComponentInParent<VisualPlantation>().plantation;
         GameMaster.GM.plantationManager.currentPlant = plant.getId();
 
+    }
+
+    public void LoadColdEnhancer(int sceneIndex)
+    {
+        SceneManager.LoadScene(sceneIndex);
+
+        GameMaster.GM.displayUpgrades.forecast = ForecastHandler.Forecast.Cold;
+    }
+
+    public void LoadHeatEnhancer(int sceneIndex)
+    {
+        SceneManager.LoadScene(sceneIndex);
+
+        GameMaster.GM.displayUpgrades.forecast = ForecastHandler.Forecast.Heat;
+    }
+
+    public void LoadPestEnhancer(int sceneIndex)
+    {
+        SceneManager.LoadScene(sceneIndex);
+
+        GameMaster.GM.displayUpgrades.forecast = ForecastHandler.Forecast.Pest;
+    }
+
+    public void LoadFloodEnhancer(int sceneIndex)
+    {
+        SceneManager.LoadScene(sceneIndex);
+
+        GameMaster.GM.displayUpgrades.forecast = ForecastHandler.Forecast.Flood;
+    }
+
+    public void LoadDroughtEnhancer(int sceneIndex)
+    {
+        SceneManager.LoadScene(sceneIndex);
+
+        GameMaster.GM.displayUpgrades.forecast = ForecastHandler.Forecast.Drought;
     }
 }
